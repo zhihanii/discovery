@@ -3,24 +3,27 @@ package discovery
 type Instance interface {
 	Network() string
 	Address() string
+	Port() int
 	Weight() int
 	Tag(key string) (value string, exist bool)
 }
 
-func NewInstance(network, address string, weight int, tags map[string]string) Instance {
+func NewInstance(network, address string, port int, weight int, tags map[string]string) Instance {
 	return &instance{
 		network: network,
-		addr: address,
-		weight: weight,
-		tags: tags,
+		addr:    address,
+		port:    port,
+		weight:  weight,
+		tags:    tags,
 	}
 }
 
 type instance struct {
 	network string
-	addr string
-	weight int
-	tags map[string]string
+	addr    string
+	port    int
+	weight  int
+	tags    map[string]string
 }
 
 func (i *instance) Network() string {
@@ -29,6 +32,10 @@ func (i *instance) Network() string {
 
 func (i *instance) Address() string {
 	return i.addr
+}
+
+func (i *instance) Port() int {
+	return i.port
 }
 
 func (i *instance) Weight() int {
